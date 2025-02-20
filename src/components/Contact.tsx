@@ -4,7 +4,7 @@ export default function Contact() {
         <h2 className="text-3xl font-bold mb-8">Get in Touch</h2>
         <div className="max-w-xl">
           <p className="text-gray-600 mb-6">
-            I'm always open to new opportunities and collaborations.
+            I&apos;m always open to new opportunities and collaborations.
             Feel free to reach out!
           </p>
           <div className="space-y-4">

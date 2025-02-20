@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function Projects() {
     const projects = [
       {
@@ -58,11 +60,15 @@ export default function Projects() {
   
               {/* Project image */}
               <div className="relative h-48 overflow-hidden">
-                <img 
+                <Image 
                   src={project.image} 
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-300 
+                  fill
+                  className="object-cover transition-transform duration-300 
                            group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, 
+                         (max-width: 1200px) 50vw,
+                         33vw"
                 />
               </div>
   

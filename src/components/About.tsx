@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function About() {
     return (
       <section id="about" className="py-16">
@@ -17,10 +19,13 @@ export default function About() {
             </div>
           </div>
           <div className="relative h-64">
-            <img
+            <Image
               src="/your-photo.jpg"
               alt="Evan Zhang"
-              className="rounded-lg object-cover w-full h-full"
+              fill
+              className="rounded-lg object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
             />
           </div>
         </div>

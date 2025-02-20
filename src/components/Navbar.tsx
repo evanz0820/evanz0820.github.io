@@ -3,6 +3,7 @@
 
 import { useTheme } from "@/components/theme-provider"
 import { Moon, Sun } from "lucide-react"
+import Link from 'next/link'
 
 export function Navbar() {
   const { theme, setTheme } = useTheme()
@@ -11,11 +12,11 @@ export function Navbar() {
     <nav className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b dark:border-gray-700 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <a href="/" className="text-xl font-bold text-blue-600">EZ</a>
+          <Link href="/" className="text-xl font-bold text-blue-600">EZ</Link>
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#projects" className="text-black dark:text-white hover:text-blue-600">Projects</a>
-            <a href="#about" className="text-black dark:text-white hover:text-blue-600">About</a>
-            <a href="#contact" className="text-black dark:text-white hover:text-blue-600">Contact</a>
+            <Link href="#projects" className="text-black dark:text-white hover:text-blue-600">Projects</Link>
+            <Link href="#about" className="text-black dark:text-white hover:text-blue-600">About</Link>
+            <Link href="#contact" className="text-black dark:text-white hover:text-blue-600">Contact</Link>
             <a 
               href="/resume.pdf" 
               target="_blank"
