@@ -1,4 +1,3 @@
-// src/components/navbar.tsx
 'use client'
 
 import { useTheme } from "@/components/theme-provider"
@@ -14,8 +13,8 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="text-xl font-bold text-blue-600">EZ</Link>
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="#projects" className="text-black dark:text-white hover:text-blue-600">Projects</Link>
             <Link href="#about" className="text-black dark:text-white hover:text-blue-600">About</Link>
+            <Link href="#projects" className="text-black dark:text-white hover:text-blue-600">Projects</Link>
             <Link href="#contact" className="text-black dark:text-white hover:text-blue-600">Contact</Link>
             <a 
               href="/resume.pdf" 
