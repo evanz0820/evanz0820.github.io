@@ -6,7 +6,7 @@ export default function Hero() {
             Hi, I&apos;m <span className="text-blue-600">Evan Zhang</span>
           </h1>
           <p className="text-xl text-gray-600">
-            Placeholder
+            Work in progress
           </p>
         </div>
       </section>
