@@ -7,14 +7,14 @@ export default function Projects() {
         description: "A full-stack web application for managing user interactions and data visualization.",
         tech: ["Next.js", "Tailwind", "TypeScript"],
         image: "/project1.png",
-        link: "https://project1.com"
+        link: "https://github.com/Ipelcaztreortega/fsh"
       },
       {
         title: "University Course Scheduler",
         description: "Real-time chat application with end-to-end encryption and group messaging features.",
         tech: ["React", "Node.js", "Socket.io"],
         image: "/project2.png",
-        link: "https://project2.com"
+        link: "https://github.com/GSU-Scheduler/website2"
       },
       {
         title: "Rankify",
