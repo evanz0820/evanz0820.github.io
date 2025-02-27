@@ -53,7 +53,7 @@ export default function About() {
             <div className="absolute inset-0 bg-blue-100 dark:bg-blue-900/20 rounded-lg transform -translate-x-4 -translate-y-4 z-0"></div>
             <div className="relative h-full w-full z-10">
               <Image
-                src="/your-photo.jpg"
+                src="/your-photo.png"
                 alt="Evan Zhang"
                 fill
                 className="rounded-lg object-cover"
