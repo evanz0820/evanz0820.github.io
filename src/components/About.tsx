@@ -18,13 +18,13 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div className="reveal">
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              I'm a Full Stack Developer with a passion for creating elegant, efficient, and user-friendly web applications. My journey began with a fascination for how technology can solve real-world problems, which led me to pursue a degree in Computer Science at Georgia State University.
+              I&apos;m a Full Stack Developer with a passion for creating elegant, efficient, and user-friendly web applications. My journey began with a fascination for how technology can solve real-world problems, which led me to pursue a degree in Computer Science at Georgia State University.
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              With experience in both front-end and back-end development, I enjoy working across the entire stack to deliver cohesive solutions. I'm particularly enthusiastic about React and the Next.js ecosystem, and I continuously expand my knowledge in emerging technologies.
+              With experience in both front-end and back-end development, I enjoy working across the entire stack to deliver cohesive solutions. I&apos;m particularly enthusiastic about React and the Next.js ecosystem, and I continuously expand my knowledge in emerging technologies.
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-8">
-              When I'm not coding, you might find me exploring new hiking trails, experimenting with photography, or contributing to open-source projects.
+              When I&apos;m not coding, you might find me exploring new hiking trails, experimenting with photography, or contributing to open-source projects.
             </p>
             
             <div className="mb-8">
