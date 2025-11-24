@@ -28,7 +28,7 @@ export default function Projects() {
         description: "Review website dedicated for students at Georgia State University for businesses and restaurants around the downtown campus.",
         tech: ["Vue.js", "Tailwind", "Firebase", "Google Maps API"],
         image: "/project3.png",
-        link: "https://github.com/evanz0820/Rankify"
+        link: "https://rankify-xi.vercel.app/"
       }
     ]
   
