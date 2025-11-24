@@ -3,6 +3,13 @@ import Image from 'next/image'
 export default function Projects() {
     const projects = [
       {
+        title: "Smart Workforce Scheduler",
+        description: "A full-stack web application for managing user interactions and data visualization.",
+        tech: ["React", "Tailwind", "TypeScript"],
+        image: "/project4.png",
+        link: "https://smart-workforce-scheduler.vercel.app/"
+      },
+      {
         title: "Hospital Management System",
         description: "A full-stack web application for managing user interactions and data visualization.",
         tech: ["Next.js", "Tailwind", "TypeScript"],
