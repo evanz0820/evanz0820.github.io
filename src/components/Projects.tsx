@@ -1,33 +1,27 @@
-import Image from 'next/image'
-
 export default function Projects() {
     const projects = [
       {
         title: "Smart Workforce Scheduler",
         description: "A full-stack web application for managing user interactions and data visualization.",
         tech: ["React", "Tailwind", "TypeScript"],
-        image: "/project4.png",
         link: "https://smart-workforce-scheduler.vercel.app/"
       },
       {
         title: "Hospital Management System",
         description: "A full-stack web application for managing user interactions and data visualization.",
         tech: ["Next.js", "Tailwind", "TypeScript"],
-        image: "/project1.png",
         link: "https://github.com/Ipelcaztreortega/fsh"
       },
       {
         title: "University Course Scheduler",
         description: "Real-time chat application with end-to-end encryption and group messaging features.",
         tech: ["React", "Node.js", "Socket.io"],
-        image: "/project2.png",
         link: "https://github.com/GSU-Scheduler/website2"
       },
       {
         title: "Rankify",
         description: "Review website dedicated for students at Georgia State University for businesses and restaurants around the downtown campus.",
         tech: ["Vue.js", "Tailwind", "Firebase", "Google Maps API"],
-        image: "/project3.png",
         link: "https://rankify-xi.vercel.app/"
       }
     ]
@@ -65,17 +59,14 @@ export default function Projects() {
                 </span>
               </div>
   
-              {/* Project image */}
-              <div className="relative h-48 overflow-hidden">
-                <Image 
-                  src={project.image} 
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-300 
-                           group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, 
-                         (max-width: 1200px) 50vw,
-                         33vw"
+              {/* Project preview iframe */}
+              <div className="relative h-48 overflow-hidden bg-gray-100 dark:bg-gray-900">
+                <iframe 
+                  src={project.link}
+                  title={project.title}
+                  className="absolute top-0 left-0 w-[200%] h-[200%] origin-top-left scale-50 pointer-events-none border-0"
+                  loading="lazy"
+                  sandbox="allow-scripts allow-same-origin"
                 />
               </div>
   
