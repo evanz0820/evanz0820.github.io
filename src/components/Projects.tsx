@@ -1,6 +1,12 @@
 export default function Projects() {
     const projects = [
       {
+        title: "Credit Card Fraud Detection",
+        description: "Full-stack ML application using PyTorch neural networks to detect fraudulent transactions with an Angular dashboard for real-time visualization and model metrics.",
+        tech: ["Angular", "PyTorch", "Flask", "Chart.js"],
+        link: "https://fraud-detection-model-roan.vercel.app/"
+      },
+      {
         title: "Smart Workforce Scheduler",
         description: "A full-stack web application for managing user interactions and data visualization.",
         tech: ["React", "Tailwind", "TypeScript"],
