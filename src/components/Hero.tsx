@@ -63,8 +63,9 @@ export default function Hero() {
             <span className="inline-block w-0.5 sm:w-1 h-5 sm:h-6 md:h-8 bg-blue-600 ml-1 animate-pulse"></span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 max-w-2xl animate-slideUp animation-delay-200">
-            I build modern web applications with a focus on user experience, performance, and clean code.
-            Specializing in React, Next.js, and TypeScript to create elegant solutions for complex problems.
+            Software Engineer at FIS Global building enterprise banking platforms.
+            Passionate about turning complex requirements into reliable, scalable solutions
+            across the full stack.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 animate-slideUp animation-delay-300">

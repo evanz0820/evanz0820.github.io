@@ -51,6 +51,7 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link href="#about" className="text-black dark:text-white hover:text-blue-600 transition-colors">About</Link>
+            <Link href="#experience" className="text-black dark:text-white hover:text-blue-600 transition-colors">Experience</Link>
             <Link href="#projects" className="text-black dark:text-white hover:text-blue-600 transition-colors">Projects</Link>
             <Link href="#contact" className="text-black dark:text-white hover:text-blue-600 transition-colors">Contact</Link>
             <a 
@@ -94,18 +95,25 @@ export function Navbar() {
       
       {/* Mobile Menu */}
       <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-        isMenuOpen ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
+        isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
       } bg-white dark:bg-gray-900 border-b dark:border-gray-700`}>
         <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <Link 
-              href="#about" 
+            <Link
+              href="#about"
               onClick={handleLinkClick}
               className="text-black dark:text-white hover:text-blue-600 py-2 transition-colors"
             >
               About
             </Link>
-            <Link 
-              href="#projects" 
+            <Link
+              href="#experience"
+              onClick={handleLinkClick}
+              className="text-black dark:text-white hover:text-blue-600 py-2 transition-colors"
+            >
+              Experience
+            </Link>
+            <Link
+              href="#projects"
               onClick={handleLinkClick}
               className="text-black dark:text-white hover:text-blue-600 py-2 transition-colors"
             >

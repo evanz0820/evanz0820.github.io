@@ -18,13 +18,13 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div className="reveal order-2 md:order-1">
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              I&apos;m a Full Stack Developer with a passion for creating elegant, efficient, and user-friendly web applications. My journey began with a fascination for how technology can solve real-world problems, which led me to pursue a degree in Computer Science at Georgia State University.
+              I&apos;m a Software Engineer at FIS Global, where I work on the Profile core banking platform serving clients like Barclays. My journey into tech started with a curiosity for how software can solve real-world problems, which led me to study Computer Science at Georgia State University.
             </p>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              With experience in both front-end and back-end development, I enjoy working across the entire stack to deliver cohesive solutions. I&apos;m particularly enthusiastic about React and the Next.js ecosystem, and I continuously expand my knowledge in emerging technologies.
+              Day to day, I build and validate features across the full stack — from database logic and backend triggers to front-end delivery systems. I also develop automation tools with Python and Power Apps that have cut client onboarding time by 35%.
             </p>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-6 sm:mb-8">
-              When I&apos;m not coding, you might find me exploring new hiking trails, experimenting with photography, or contributing to open-source projects.
+            Outside of work, I'm usually on the tennis court training for my next tournament, grinding competitive Valorant, or tinkering away on side projects.
             </p>
 
             <div className="mb-6 sm:mb-8">
