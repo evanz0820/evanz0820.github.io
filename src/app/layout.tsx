@@ -8,8 +8,8 @@ import Footer from "@/components/Footer"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: 'Evan Zhang | Full Stack Developer',
-  description: 'Portfolio website of Evan Zhang, Full Stack Developer specializing in React, Next.js, and TypeScript',
+  title: 'Evan Zhang | Software Engineer',
+  description: 'Portfolio website of Evan Zhang, Software Engineer specializing in React, Next.js, TypeScript, Python, Power Apps, and SQL',
 }
 
 export default function RootLayout({
