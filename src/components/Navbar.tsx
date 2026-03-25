@@ -93,9 +93,10 @@ export function Navbar() {
       </div>
       
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 border-b dark:border-gray-700">
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        isMenuOpen ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
+      } bg-white dark:bg-gray-900 border-b dark:border-gray-700`}>
+        <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             <Link 
               href="#about" 
               onClick={handleLinkClick}
@@ -127,8 +128,7 @@ export function Navbar() {
               Resume
             </a>
           </div>
-        </div>
-      )}
+      </div>
     </nav>
   )
 }
