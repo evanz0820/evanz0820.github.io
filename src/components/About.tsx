@@ -18,7 +18,7 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div className="reveal order-2 md:order-1">
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              I&apos;m a Software Engineer at FIS Global, where I work on the Profile core banking platform serving clients like Barclays. My journey into tech started with a curiosity for how software can solve real-world problems, which led me to study Computer Science at Georgia State University.
+              I&apos;m an Engineer at FIS Global, where I work on the Profile core banking platform serving clients like Barclays. My journey into tech started with a curiosity for how software can solve real-world problems, which led me to study Computer Science at Georgia State University.
             </p>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
               Day to day, I build and validate features across the full stack — from database logic and backend triggers to front-end delivery systems. I also develop automation tools with Python and Power Apps that have cut client onboarding time by 35%.

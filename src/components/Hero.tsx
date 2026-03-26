@@ -7,10 +7,10 @@ import { useState, useEffect } from 'react'
 
 export default function Hero() {
   const titles = [
-    "Full Stack Developer",
+    "Software Engineer",
     "Data Analyst",
     "Business Analyst",
-    "Software Engineer"
+    "Full Stack Engineer"
   ]
   
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0)
@@ -63,7 +63,7 @@ export default function Hero() {
             <span className="inline-block w-0.5 sm:w-1 h-5 sm:h-6 md:h-8 bg-blue-600 ml-1 animate-pulse"></span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 max-w-2xl animate-slideUp animation-delay-200">
-            Software Engineer at FIS Global building enterprise banking platforms.
+            Professional Services Engineer I at FIS Global building enterprise banking platforms.
             Passionate about turning complex requirements into reliable, scalable solutions
             across the full stack.
           </p>
