@@ -11,7 +11,7 @@ interface Job {
 
 const jobs: Job[] = [
   {
-    title: "Professional Services Engineer I",
+    title: "Software Engineer",
     company: "FIS Global",
     subtitle: "Fidelity National Information Services",
     logo: "/fis-logo.png",
