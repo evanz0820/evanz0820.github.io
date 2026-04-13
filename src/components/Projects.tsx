@@ -1,6 +1,12 @@
 export default function Projects() {
     const projects = [
       {
+        title: "Amortly",
+        description: "A fintech web app for simulating loans, making Stripe payments, and tracking a mock credit score with interactive charts and JWT authentication.",
+        tech: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Stripe"],
+        link: "https://amortly.vercel.app/"
+      },
+      {
         title: "Credit Card Fraud Detection",
         description: "Full-stack ML application using PyTorch neural networks to detect fraudulent transactions with an Angular dashboard for real-time visualization and model metrics.",
         tech: ["Angular", "PyTorch", "Flask", "Chart.js"],
