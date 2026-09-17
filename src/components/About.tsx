@@ -1,69 +1,72 @@
 import Image from 'next/image'
+import Section from '@/components/Section'
+
+const toolkit = [
+  {
+    area: "Analysis",
+    items: ["Advanced Excel", "SQL", "Python", "Tableau", "Root cause analysis"],
+  },
+  {
+    area: "Product and delivery",
+    items: ["Requirements gathering", "Business process documentation", "Stakeholder communication", "Agile and Scrum", "SDLC"],
+  },
+  {
+    area: "Automation and tools",
+    items: ["Microsoft Power Apps", "AI-assisted analysis and workflow automation (Anthropic API)", "React, FastAPI, and PostgreSQL"],
+  },
+]
 
 export default function About() {
-  const skills = [
-    { name: "React", level: 90 },
-    { name: "Next.js", level: 85 },
-    { name: "TypeScript", level: 80 },
-    { name: "Tailwind CSS", level: 95 },
-    { name: "Python", level: 75 },
-    { name: "SQL", level: 70 },
-    { name: "Git", level: 85 }
-  ]
-
   return (
-    <section id="about" className="py-10 sm:py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-blue-600 reveal">About Me</h2>
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-center">
-          <div className="reveal order-2 md:order-1">
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              I&apos;m an Engineer at FIS Global, where I work on the Profile core banking platform serving clients like Barclays. My journey into tech started with a curiosity for how software can solve real-world problems, which led me to study Computer Science at Georgia State University.
-            </p>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-              Day to day, I build and validate features across the full stack — from database logic and backend triggers to front-end delivery systems. I also develop automation tools with Python and Power Apps that have cut client onboarding time by 35%.
-            </p>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-6 sm:mb-8">
-            Outside of work, I'm usually on the tennis court training for my next tournament, grinding competitive Valorant, or tinkering away on side projects.
-            </p>
+    <Section
+      id="about"
+      title="I’ve worked both sides of the counter: serving bank customers, then building the systems behind them."
+    >
+      <div className="grid gap-10 sm:grid-cols-[minmax(0,1fr)_15rem] sm:gap-12">
+        <div className="reveal space-y-5">
+          <p className="prose-body">
+            I started at a Wells Fargo teller window, handling more than a hundred transactions a day
+            and learning how much a bank&apos;s rules shape what a customer experiences. Then at FIS
+            I worked on core banking for clients like Barclays, where those same rules live in code.
+          </p>
+          <p className="prose-body">
+            Most of that job was translation and triage. I gathered requirements for prospective
+            client demos and wrote the specifications that kept BAs, developers, and sales agreed on
+            scope. For Barclays, I traced recurring incidents to their root cause and cut the typical
+            fix cycle from three days to a day and a half.
+          </p>
+          <p className="prose-body">
+            I studied computer science at Georgia State and I&apos;m now adding the business side
+            through Georgia Tech&apos;s MS in Management. On the side I run Tennis by Evan, a racquet
+            stringing business, and play tournament tennis and competitive Valorant. I speak English
+            and Mandarin natively.
+          </p>
+        </div>
 
-            <div className="mb-6 sm:mb-8">
-              <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800 dark:text-gray-200">Technical Skills</h3>
-              <div className="space-y-3 sm:space-y-4">
-                {skills.map((skill, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300">{skill.name}</span>
-                      <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">{skill.level}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 sm:h-2">
-                      <div
-                        className="bg-blue-600 h-1.5 sm:h-2 rounded-full"
-                        style={{ width: `${skill.level}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="relative h-56 sm:h-64 md:h-full min-h-[250px] sm:min-h-[300px] md:min-h-[400px] reveal order-1 md:order-2 overflow-hidden">
-            <div className="absolute inset-2 sm:inset-0 border-2 border-blue-600 rounded-lg transform translate-x-2 translate-y-2 sm:translate-x-4 sm:translate-y-4 z-0 dark:border-opacity-50"></div>
-            <div className="absolute inset-2 sm:inset-0 bg-blue-100 dark:bg-blue-900/20 rounded-lg transform -translate-x-2 -translate-y-2 sm:-translate-x-4 sm:-translate-y-4 z-0"></div>
-            <div className="relative h-full w-full z-10 px-2 sm:px-0">
-              <Image
-                src="/your-photo.png"
-                alt="Evan Zhang"
-                fill
-                className="rounded-lg object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, 50vw"
-                priority
-              />
-            </div>
-          </div>
+        <div className="reveal order-first sm:order-none" style={{ '--i': 1 } as React.CSSProperties}>
+          <Image
+            src="/evan-tokyo.webp"
+            alt="Evan Zhang in front of Tokyo Tower at night"
+            width={920}
+            height={1227}
+            sizes="(max-width: 640px) 60vw, 240px"
+            className="w-3/5 rounded-xl object-cover sm:w-full"
+          />
         </div>
       </div>
-    </section>
+
+      <div className="mt-14 grid gap-8 border-t border-rule pt-8 sm:grid-cols-3">
+        {toolkit.map((group, index) => (
+          <div key={group.area} className="reveal" style={{ '--i': index } as React.CSSProperties}>
+            <h3 className="mb-3 text-sm font-semibold text-ink">{group.area}</h3>
+            <ul className="space-y-1.5 text-[0.9375rem] text-muted">
+              {group.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Section>
   )
 }

@@ -2,141 +2,179 @@
 
 import { useTheme } from "@/components/theme-provider"
 import { Menu, Moon, Sun, X } from "lucide-react"
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
+
+const links = [
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'work', label: 'Work' },
+  { id: 'education', label: 'Education' },
+  { id: 'contact', label: 'Contact' },
+]
 
 export function Navbar() {
   const { theme, setTheme } = useTheme()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState<string | null>(null)
+  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null)
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({})
 
   // Close mobile menu when resizing to desktop
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768 && isMenuOpen) {
-        setIsMenuOpen(false)
-      }
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [isMenuOpen])
+    const mq = window.matchMedia('(min-width: 768px)')
+    const close = () => mq.matches && setIsMenuOpen(false)
+    mq.addEventListener('change', close)
+    return () => mq.removeEventListener('change', close)
+  }, [])
 
   // Handle scroll effect for navbar
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
-    }
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => setScrolled(window.scrollY > 10)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close menu when a link is clicked
-  const handleLinkClick = () => {
-    setIsMenuOpen(false)
+  // Scroll-spy: the section crossing the middle of the viewport is the active one
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id)
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    )
+    links.forEach(({ id }) => {
+      const section = document.getElementById(id)
+      if (section) observer.observe(section)
+    })
+    const hero = document.getElementById('top')
+    if (hero) observer.observe(hero)
+    return () => observer.disconnect()
+  }, [])
+
+  // Slide the underline to the active link
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = active ? linkRefs.current[active] : null
+      setIndicator(el ? { left: el.offsetLeft, width: el.offsetWidth } : null)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [active])
+
+  const toggleTheme = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const next = theme === 'light' ? 'dark' : 'light'
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!document.startViewTransition || reduceMotion) {
+      setTheme(next)
+      return
+    }
+    // Wipe the new theme in from the button that was pressed
+    const rect = event.currentTarget.getBoundingClientRect()
+    const root = document.documentElement
+    root.style.setProperty('--wipe-x', `${rect.left + rect.width / 2}px`)
+    root.style.setProperty('--wipe-y', `${rect.top + rect.height / 2}px`)
+    document.startViewTransition(() => flushSync(() => setTheme(next)))
   }
 
+  const themeButton = (
+    <button
+      onClick={toggleTheme}
+      className="rounded-full border border-rule p-2 text-muted transition-colors duration-300 hover:border-ink hover:text-ink"
+      aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
+    >
+      {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+    </button>
+  )
+
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/90 dark:bg-gray-900/90 shadow-md backdrop-blur-sm' 
-      : 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm'
-    } border-b dark:border-gray-700`}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-xl font-bold text-blue-600">EZ</Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="#about" className="text-black dark:text-white hover:text-blue-600 transition-colors">About</Link>
-            <Link href="#experience" className="text-black dark:text-white hover:text-blue-600 transition-colors">Experience</Link>
-            <Link href="#projects" className="text-black dark:text-white hover:text-blue-600 transition-colors">Projects</Link>
-            <Link href="#contact" className="text-black dark:text-white hover:text-blue-600 transition-colors">Contact</Link>
-            <a 
-              href="/resume.pdf" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 
-                       rounded-md hover:bg-blue-700 transition-colors"
-            >
+    <nav
+      className={`fixed top-0 z-50 w-full border-b backdrop-blur-md transition-[background-color,border-color] duration-500 ${
+        scrolled || isMenuOpen ? 'border-rule bg-paper/85' : 'border-transparent bg-paper/0'
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-page items-center justify-between px-5 sm:px-8">
+        <a href="#top" className="font-display text-xl font-semibold tracking-tight text-ink">
+          Evan Zhang
+        </a>
+
+        {/* Desktop Navigation */}
+        <div className="hidden items-center gap-6 md:flex">
+          <div className="relative flex items-center gap-6">
+            {links.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                ref={(el) => { linkRefs.current[id] = el }}
+                aria-current={active === id ? 'location' : undefined}
+                className={`py-1 text-sm transition-colors duration-300 hover:text-ink ${
+                  active === id ? 'text-ink' : 'text-muted'
+                }`}
+              >
+                {label}
+              </a>
+            ))}
+            <span
+              aria-hidden
+              className="absolute -bottom-0.5 left-0 h-px bg-accent transition-[transform,width,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{
+                width: indicator?.width ?? 0,
+                transform: `translateX(${indicator?.left ?? 0}px)`,
+                opacity: indicator ? 1 : 0,
+              }}
+            />
+          </div>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-primary py-2">
+            Resume
+          </a>
+          {themeButton}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="flex items-center gap-3 md:hidden">
+          {themeButton}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="rounded-full p-2 text-ink"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
+          isMenuOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <div className="overflow-hidden" inert={!isMenuOpen}>
+          <div className="flex flex-col gap-1 px-5 pb-5 sm:px-8">
+            {links.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setIsMenuOpen(false)}
+                className="border-b border-rule py-3 font-display text-xl text-ink"
+              >
+                {label}
+              </a>
+            ))}
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-4">
               Resume
             </a>
-            <button
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="p-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 
-                       hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="flex items-center space-x-4 md:hidden">
-            <button
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="p-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
-              aria-label="Toggle theme"
-            >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </div>
       </div>
-      
-      {/* Mobile Menu */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-        isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-      } bg-white dark:bg-gray-900 border-b dark:border-gray-700`}>
-        <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <Link
-              href="#about"
-              onClick={handleLinkClick}
-              className="text-black dark:text-white hover:text-blue-600 py-2 transition-colors"
-            >
-              About
-            </Link>
-            <Link
-              href="#experience"
-              onClick={handleLinkClick}
-              className="text-black dark:text-white hover:text-blue-600 py-2 transition-colors"
-            >
-              Experience
-            </Link>
-            <Link
-              href="#projects"
-              onClick={handleLinkClick}
-              className="text-black dark:text-white hover:text-blue-600 py-2 transition-colors"
-            >
-              Projects
-            </Link>
-            <Link 
-              href="#contact" 
-              onClick={handleLinkClick}
-              className="text-black dark:text-white hover:text-blue-600 py-2 transition-colors"
-            >
-              Contact
-            </Link>
-            <a 
-              href="/resume.pdf" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 
-                      rounded-md hover:bg-blue-700 transition-colors inline-block w-full text-center"
-            >
-              Resume
-            </a>
-          </div>
-      </div>
+
+      <div aria-hidden className="scroll-progress absolute inset-x-0 -bottom-px h-px bg-accent" />
     </nav>
   )
 }

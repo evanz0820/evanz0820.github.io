@@ -22,26 +22,22 @@ const initialState: ThemeProviderState = {
 const ThemeProviderContext = React.createContext<ThemeProviderState>(initialState)
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  const [theme, setTheme] = React.useState<Theme>('light')
+  const [theme, setThemeState] = React.useState<Theme>('light')
 
+  // The inline script in layout.tsx has already applied the class; mirror it into state.
   React.useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as Theme || 'light'
-    setTheme(storedTheme)
+    setThemeState(document.documentElement.classList.contains('dark') ? 'dark' : 'light')
   }, [])
 
-  React.useEffect(() => {
-    const root = window.document.documentElement
-    root.classList.remove('light', 'dark')
-    root.classList.add(theme)
-    localStorage.setItem('theme', theme)
-  }, [theme])
+  const setTheme = React.useCallback((next: Theme) => {
+    document.documentElement.classList.toggle('dark', next === 'dark')
+    try {
+      localStorage.setItem('theme', next)
+    } catch {}
+    setThemeState(next)
+  }, [])
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      setTheme(theme)
-    },
-  }
+  const value = React.useMemo(() => ({ theme, setTheme }), [theme, setTheme])
 
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
