@@ -2,104 +2,208 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens (rgb channels so Tailwind opacity modifiers work) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: 246 248 249;
+  --surface: 255 255 255;
+  --ink: 14 26 43;
+  --muted: 85 98 122;
+  --rule: 217 224 230;
+  --accent: 10 107 78;
+  --accent-soft: 227 241 236;
+  --on-accent: 255 255 255;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: light;
+  /* lets <details> animate to its natural height where supported */
+  interpolate-size: allow-keywords;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.dark {
+  --paper: 11 19 31;
+  --surface: 18 29 44;
+  --ink: 232 237 243;
+  --muted: 154 168 188;
+  --rule: 34 48 68;
+  --accent: 76 201 160;
+  --accent-soft: 17 48 42;
+  --on-accent: 8 22 18;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.25);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+@layer components {
+  /* Full-sentence section headline, consulting-deck style */
+  .action-title {
+    @apply font-display text-[1.75rem] leading-[1.15] tracking-[-0.01em] text-ink sm:text-4xl;
+    text-wrap: balance;
+  }
 
-/* Animation keyframes */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+  .prose-body {
+    @apply max-w-[62ch] text-base leading-[1.7] text-muted sm:text-[1.0625rem];
+  }
 
-@keyframes slideUp {
-  from { 
-    opacity: 0;
-    transform: translateY(20px);
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold;
+    transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out),
+      border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
   }
-  to { 
-    opacity: 1;
-    transform: translateY(0);
+  .btn:active {
+    transform: scale(0.97);
   }
-}
+  .btn-primary {
+    @apply bg-accent text-on-accent hover:bg-ink hover:text-paper;
+  }
+  .btn-quiet {
+    @apply border border-rule text-ink hover:border-ink;
+  }
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s var(--ease-out);
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
   }
 }
 
-/* Animation utility classes */
-.animate-fadeIn {
-  animation: fadeIn 1s ease forwards;
+/* Scroll progress bar under the navbar (progressive enhancement, no JS) */
+.scroll-progress {
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: grow-x linear both;
+    animation-timeline: scroll(root);
+  }
+}
+@keyframes grow-x {
+  to { transform: scaleX(1); }
 }
 
-.animate-slideUp {
-  animation: slideUp 0.6s ease forwards;
-}
-
-.animate-slideInLeft {
-  animation: slideInLeft 0.6s ease forwards;
-}
-
-.animate-slideInRight {
-  animation: slideInRight 0.6s ease forwards;
-}
-
-.animation-delay-100 {
-  animation-delay: 0.1s;
-}
-
-.animation-delay-200 {
-  animation-delay: 0.2s;
-}
-
-.animation-delay-300 {
-  animation-delay: 0.3s;
-}
-
-.animation-delay-400 {
-  animation-delay: 0.4s;
-}
-
-/* Scroll reveal animations */
+/* Scroll reveal: ScrollReveal.tsx adds .active when .reveal enters the viewport */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
 }
-
 .reveal.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+}
+
+/* Hero: request -> story -> shipped sequence, plays once on load */
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes draw-line {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes pop {
+  0% { opacity: 0; transform: scale(0.5); }
+  70% { transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.hero-in {
+  animation: step-in 0.8s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 110ms);
+}
+.flow-step {
+  animation: step-in 0.7s var(--ease-out) both;
+  animation-delay: calc(0.5s + var(--step) * 0.9s);
+}
+.flow-line {
+  transform-origin: 50% 0;
+  animation: draw-line 0.5s var(--ease-out) both;
+  animation-delay: calc(0.9s + var(--step) * 0.9s);
+}
+.flow-check {
+  animation: pop 0.5s var(--ease-out) both;
+  animation-delay: 2.9s;
+}
+
+/* Experience accordion */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details::details-content {
+  block-size: 0;
+  overflow-y: clip;
+  transition: block-size 0.45s var(--ease-out), content-visibility 0.45s allow-discrete;
+}
+details[open]::details-content {
+  block-size: auto;
+}
+details .chevron {
+  transition: transform 0.35s var(--ease-out);
+}
+details[open] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Theme switch: circular wipe from the toggle button (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: theme-wipe 0.6s var(--ease-out);
+}
+@keyframes theme-wipe {
+  from { clip-path: circle(0 at var(--wipe-x, 100%) var(--wipe-y, 0)); }
+  to { clip-path: circle(150vmax at var(--wipe-x, 100%) var(--wipe-y, 0)); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-in,
+  .flow-step,
+  .flow-line,
+  .flow-check {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+  details::details-content,
+  ::view-transition-new(root) {
+    transition: none;
+    animation: none;
+  }
 }

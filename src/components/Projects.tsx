@@ -1,116 +1,121 @@
+import Image from 'next/image'
+import { ArrowUpRight } from 'lucide-react'
+import Section from '@/components/Section'
+
+interface Project {
+  title: string
+  description: string
+  tech: string[]
+  link: string
+  image?: string
+}
+
+const projects: Project[] = [
+  {
+    title: "Amortly",
+    description: "A fintech web app for simulating loans, making Stripe payments, and tracking a mock credit score with interactive charts.",
+    tech: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Stripe"],
+    link: "https://amortly.vercel.app/",
+    image: "/projects/amortly.webp",
+  },
+  {
+    title: "Credit Card Fraud Detection",
+    description: "A PyTorch neural network that flags fraudulent transactions, with a dashboard showing live results and model metrics.",
+    tech: ["PyTorch", "Flask", "Angular", "Chart.js"],
+    link: "https://fraud-detection-model-roan.vercel.app/",
+    image: "/projects/fraud.webp",
+  },
+  {
+    title: "Smart Workforce Scheduler",
+    description: "A hospital staffing scheduler designed to cut overtime while keeping shifts compliant.",
+    tech: ["React", "TypeScript", "Tailwind"],
+    link: "https://smart-workforce-scheduler.vercel.app/",
+    image: "/projects/scheduler.webp",
+  },
+  {
+    title: "Rankify",
+    description: "A review site where Georgia State students rate the businesses and restaurants around the downtown campus.",
+    tech: ["Vue.js", "Firebase", "Google Maps API"],
+    link: "https://rankify-xi.vercel.app/",
+    image: "/projects/rankify.webp",
+  },
+  {
+    title: "Hospital Management System",
+    description: "A web app for running hospital operations: patient records, doctor schedules, and appointments.",
+    tech: ["React", "TypeScript", "Tailwind"],
+    link: "https://github.com/Ipelcaztreortega/fsh",
+  },
+  {
+    title: "University Course Scheduler",
+    description: "A course planning tool built with a team for Georgia State students.",
+    tech: ["React", "TypeScript"],
+    link: "https://github.com/GSU-Scheduler/website2",
+  },
+]
+
+const featured = projects.filter((project) => project.image)
+const rest = projects.filter((project) => !project.image)
+
 export default function Projects() {
-    const projects = [
-      {
-        title: "Amortly",
-        description: "A fintech web app for simulating loans, making Stripe payments, and tracking a mock credit score with interactive charts and JWT authentication.",
-        tech: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Stripe"],
-        link: "https://amortly.vercel.app/"
-      },
-      {
-        title: "Credit Card Fraud Detection",
-        description: "Full-stack ML application using PyTorch neural networks to detect fraudulent transactions with an Angular dashboard for real-time visualization and model metrics.",
-        tech: ["Angular", "PyTorch", "Flask", "Chart.js"],
-        link: "https://fraud-detection-model-roan.vercel.app/"
-      },
-      {
-        title: "Smart Workforce Scheduler",
-        description: "A full-stack web application for managing user interactions and data visualization.",
-        tech: ["React", "Tailwind", "TypeScript"],
-        link: "https://smart-workforce-scheduler.vercel.app/"
-      },
-      {
-        title: "Hospital Management System",
-        description: "A full-stack web application for managing user interactions and data visualization.",
-        tech: ["Next.js", "Tailwind", "TypeScript"],
-        link: "https://github.com/Ipelcaztreortega/fsh"
-      },
-      {
-        title: "University Course Scheduler",
-        description: "Real-time chat application with end-to-end encryption and group messaging features.",
-        tech: ["React", "Node.js", "Socket.io"],
-        link: "https://github.com/GSU-Scheduler/website2"
-      },
-      {
-        title: "Rankify",
-        description: "Review website dedicated for students at Georgia State University for businesses and restaurants around the downtown campus.",
-        tech: ["Vue.js", "Tailwind", "Firebase", "Google Maps API"],
-        link: "https://rankify-xi.vercel.app/"
-      }
-    ]
-  
-    return (
-      <section id="projects" className="py-10 sm:py-16 max-w-7xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-blue-600">Projects</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {projects.map((project, index) => (
+  return (
+    <Section id="work" title="On my own time, I build products around money, risk, and scheduling.">
+      <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2">
+        {featured.map((project, index) => (
+          <a
+            key={project.title}
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="reveal group block"
+            style={{ '--i': index % 2 } as React.CSSProperties}
+          >
+            <div className="overflow-hidden rounded-xl border border-rule bg-surface">
+              <Image
+                src={project.image!}
+                alt={`Screenshot of ${project.title}`}
+                width={960}
+                height={600}
+                sizes="(max-width: 640px) 100vw, 380px"
+                className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+              />
+            </div>
+            <h3 className="mt-4 flex items-start justify-between gap-3 font-display text-2xl leading-snug text-ink">
+              {project.title}
+              <ArrowUpRight
+                aria-hidden
+                size={20}
+                className="mt-1.5 flex-shrink-0 text-muted transition-[transform,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+              />
+            </h3>
+            <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">{project.description}</p>
+            <p className="mt-3 text-sm text-muted/80">{project.tech.join(', ')}</p>
+          </a>
+        ))}
+      </div>
+
+      <ul className="mt-14 border-b border-rule">
+        {rest.map((project) => (
+          <li key={project.title} className="reveal border-t border-rule">
             <a
-              key={index}
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative block overflow-hidden rounded-xl bg-white dark:bg-gray-800
-                       transition-all duration-300 ease-in-out
-                       hover:shadow-2xl hover:-translate-y-2
-                       border border-gray-200 dark:border-gray-700"
+              className="group flex items-start justify-between gap-4 py-5"
             >
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/0
-                            opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10" />
-
-              {/* View Project text that appears on hover */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white
-                            transform translate-y-full transition-transform duration-300
-                            group-hover:translate-y-0 z-20">
-                <span className="inline-flex items-center text-sm">
-                  View Project
-                  <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
-                       fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </span>
-              </div>
-
-              {/* Project preview iframe */}
-              <div className="relative h-36 sm:h-44 lg:h-48 overflow-hidden bg-gray-100 dark:bg-gray-900">
-                <iframe
-                  src={project.link}
-                  title={project.title}
-                  className="absolute top-0 left-0 w-[200%] h-[200%] origin-top-left scale-50 pointer-events-none border-0"
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin"
-                />
-              </div>
-
-              <div className="p-4 sm:p-5 lg:p-6 relative">
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold mb-1.5 sm:mb-2 text-gray-900 dark:text-white
-                             group-hover:text-blue-600 dark:group-hover:text-blue-400
-                             transition-colors duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 line-clamp-2">
-                  {project.description}
-                </p>
-
-                {/* Tech stack tags */}
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {project.tech.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm rounded-full
-                               bg-gray-100 text-gray-800
-                               dark:bg-gray-700 dark:text-gray-200
-                               transition-transform duration-300
-                               group-hover:scale-105"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <span>
+                <span className="block font-display text-xl text-ink">{project.title}</span>
+                <span className="mt-1 block text-[0.9375rem] text-muted">{project.description}</span>
+                <span className="mt-2 block text-sm text-muted/80">{project.tech.join(', ')}</span>
+              </span>
+              <ArrowUpRight
+                aria-hidden
+                size={20}
+                className="mt-1 flex-shrink-0 text-muted transition-[transform,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+              />
             </a>
-          ))}
-        </div>
-      </section>
-    )
-  }
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}

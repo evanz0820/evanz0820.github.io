@@ -5,14 +5,14 @@ import { useEffect } from 'react'
 export default function ScrollReveal() {
   useEffect(() => {
     const revealElements = document.querySelectorAll('.reveal')
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active')
-            // Optional: Unobserve after revealing to improve performance
-            // observer.unobserve(entry.target)
+            // Each element reveals once, so stop watching it
+            observer.unobserve(entry.target)
           }
         })
       },
@@ -21,15 +21,15 @@ export default function ScrollReveal() {
         rootMargin: '0px 0px -50px 0px' // Slightly earlier than viewport
       }
     )
-    
+
     revealElements.forEach((element) => {
       observer.observe(element)
     })
-    
+
     return () => {
       observer.disconnect()
     }
   }, [])
-  
+
   return null
 }

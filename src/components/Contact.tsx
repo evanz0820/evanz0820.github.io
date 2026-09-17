@@ -1,34 +1,33 @@
+import { Github, Linkedin, Mail } from 'lucide-react'
+import Section from '@/components/Section'
+
+const channels = [
+  { label: "evanzhang3826@gmail.com", href: "mailto:evanzhang3826@gmail.com", icon: Mail, external: false },
+  { label: "LinkedIn", href: "https://linkedin.com/in/evanz0820", icon: Linkedin, external: true },
+  { label: "GitHub", href: "https://github.com/evanz0820", icon: Github, external: true },
+]
+
 export default function Contact() {
-    return (
-      <section id="contact" className="py-10 sm:py-16">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-black dark:text-white">Get in Touch</h2>
-        <div className="max-w-xl">
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6">
-            I&apos;m always open to new opportunities and collaborations.
-            Feel free to reach out!
-          </p>
-          <div className="space-y-3 sm:space-y-4">
+  return (
+    <Section id="contact" title="If you need someone between the client and the code, write to me.">
+      <p className="prose-body reveal">
+        I&apos;m always open to conversations about business analysis, product, and consulting
+        work. Email is the fastest way to reach me.
+      </p>
+      <ul className="reveal mt-8 space-y-1" style={{ '--i': 1 } as React.CSSProperties}>
+        {channels.map(({ label, href, icon: Icon, external }) => (
+          <li key={label}>
             <a
-              href="mailto:zevan2003@gmail.com"
-              className="flex items-center text-sm sm:text-base text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 py-2 transition-colors"
+              href={href}
+              {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="group inline-flex items-center gap-3 py-2 font-display text-2xl text-ink sm:text-3xl"
             >
-              <span className="mr-2 sm:mr-3 text-lg">✉️</span> zevan2003@gmail.com
+              <Icon aria-hidden size={20} className="text-accent" />
+              <span className="link-underline">{label}</span>
             </a>
-            <a
-              href="https://github.com/evanz0820"
-              className="flex items-center text-sm sm:text-base text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 py-2 transition-colors"
-            >
-              <span className="mr-2 sm:mr-3 text-lg">📦</span> GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/evanz0820"
-              className="flex items-center text-sm sm:text-base text-blue-600 hover:text-blue-800 dark:hover:text-blue-400 py-2 transition-colors"
-            >
-              <span className="mr-2 sm:mr-3 text-lg">💼</span> LinkedIn
-            </a>
-          </div>
-        </div>
-      </section>
-    )
-  }
-  
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
